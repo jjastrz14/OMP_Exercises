@@ -17,7 +17,7 @@
 #include <omp.h>
 #include <cstdlib>
 
-inline constexpr std::size_t INTERVALS{100000000};
+inline constexpr std::size_t INTERVALS{10000000000};
 inline constexpr long double TRUE_PI{3.1415926535897932384626433832795L};
 
 //TO COMPILE WITH -std = c++20 OR 23
@@ -31,7 +31,7 @@ int main()
 
     std::cout << "Number of intervals: " << INTERVALS << std::endl;
 
-    #pragma omp parallel for reduction(+:sum) schedule(static)
+    //#pragma omp parallel for reduction(+:sum) schedule(static)
     // Using OpenMP to parallelize the loop for better performance
     for (std::size_t i = 1; i <= INTERVALS; i++)
     {
