@@ -27,11 +27,36 @@ int main()
     double x(0.0), dx(1.0 / static_cast<double>(INTERVALS)), f(0.0), sum(0.0), pi(0.0);
 
     double time2{0.0};
-    double time1{omp_get_wtime()};
+    double time3{0.0};
+    double time1a{omp_get_wtime()};
 
     std::cout << "Number of intervals: " << INTERVALS << std::endl;
 
-    //#pragma omp parallel for reduction(+:sum) schedule(static)
+    // option 1 with critical and atomic 
+    #pragma omp parralel for default(none) private(x, f) shared(dx, INTERVALS, sum)
+    for (std::size_t i = 1; i <= INTERVALS; i++)
+    {
+        x = dx * (static_cast<double>(i) - 0.5);
+        f = 4.0 / (1.0 + x * x);
+    #pragma omp atomic
+        sum += f;
+    }
+
+    pi = dx * sum;
+
+    time2 = omp_get_wtime() - time1a;
+
+    long double error((TRUE_PI - static_cast<long double>(pi))/TRUE_PI);
+
+    std::cout << "Computed PI: " << std::setprecision(25) << pi << std::endl
+            << "True PI: " << std::setprecision(25) << TRUE_PI << std::endl
+            << "Estimate error: " <<  std::abs(error) << std::endl
+            << "Elapsed time (s) = " << time2 << std::endl;
+
+    double time1b{omp_get_wtime()};
+
+    // option 2 reduction
+    #pragma omp parralel for default(none) private(x, f) shared(dx, INTERVALS) reduction(+:sum)
     // Using OpenMP to parallelize the loop for better performance
     for (std::size_t i = 1; i <= INTERVALS; i++)
     {
@@ -42,14 +67,14 @@ int main()
 
     pi = dx * sum;
     
-    time2 = omp_get_wtime() - time1;
+    time3 = omp_get_wtime() - time1b;
 
     long double error((TRUE_PI - static_cast<long double>(pi))/TRUE_PI);
 
     std::cout << "Computed PI: " << std::setprecision(25) << pi << std::endl
             << "True PI: " << std::setprecision(25) << TRUE_PI << std::endl
             << "Estimate error: " <<  std::abs(error) << std::endl
-            << "Elapsed time (s) = " << time2 << std::endl;
+            << "Elapsed time (s) = " << time3 << std::endl;
 
     return 0;
 }
