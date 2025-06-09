@@ -18,6 +18,7 @@
 #include <cstdlib>
 
 inline constexpr std::size_t INTERVALS{100000000};
+inline constexpr long double TRUE_PI{3.1415926535897932384626433832795L};
 
 //TO COMPILE WITH -std = c++20 OR 23
 
@@ -43,10 +44,10 @@ int main()
     
     time2 = omp_get_wtime() - time1;
 
-    long double error((std::numbers::pi_v<long double> - static_cast<long double>(pi))/std::numbers::pi_v<long double>);
+    long double error((TRUE_PI - static_cast<long double>(pi))/TRUE_PI);
 
     std::cout << "Computed PI: " << std::setprecision(25) << pi << std::endl
-            << "True PI: " << std::setprecision(25) << std::numbers::pi_v<long double> << std::endl
+            << "True PI: " << std::setprecision(25) << TRUE_PI << std::endl
             << "Estimate error: " <<  std::abs(error) << std::endl
             << "Elapsed time (s) = " << time2 << std::endl;
 
