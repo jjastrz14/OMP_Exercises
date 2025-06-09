@@ -32,8 +32,9 @@ int main()
 
     std::cout << "Number of intervals: " << INTERVALS << std::endl;
 
+    
     // option 1 with critical and atomic 
-    #pragma omp parallel for default(none) private(x, f) shared(dx, INTERVALS, sum)
+    /* #pragma omp parallel for default(none) private(x, f) shared(dx, INTERVALS, sum)
     for (std::size_t i = 1; i <= INTERVALS; i++)
     {
         x = dx * (static_cast<double>(i) - 0.5);
@@ -52,7 +53,7 @@ int main()
             << "True PI: " << std::setprecision(25) << TRUE_PI << std::endl
             << "Estimate error: " <<  std::abs(error1) << std::endl
             << "Elapsed time (s) = " << time2 << std::endl;
-
+ */
     double time1b{omp_get_wtime()};
 
     // option 2 reduction
