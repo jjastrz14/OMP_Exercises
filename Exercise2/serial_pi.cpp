@@ -15,6 +15,7 @@
 #include <cmath>
 #include <iomanip>
 #include <omp.h>
+#include <cstdlib>
 
 inline constexpr std::size_t INTERVALS{100000000};
 
