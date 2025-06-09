@@ -46,11 +46,11 @@ int main()
 
     time2 = omp_get_wtime() - time1a;
 
-    long double error((TRUE_PI - static_cast<long double>(pi))/TRUE_PI);
+    long double error1((TRUE_PI - static_cast<long double>(pi))/TRUE_PI);
 
     std::cout << "Computed PI: " << std::setprecision(25) << pi << std::endl
             << "True PI: " << std::setprecision(25) << TRUE_PI << std::endl
-            << "Estimate error: " <<  std::abs(error) << std::endl
+            << "Estimate error: " <<  std::abs(error1) << std::endl
             << "Elapsed time (s) = " << time2 << std::endl;
 
     double time1b{omp_get_wtime()};
@@ -69,11 +69,11 @@ int main()
     
     time3 = omp_get_wtime() - time1b;
 
-    long double error((TRUE_PI - static_cast<long double>(pi))/TRUE_PI);
+    long double error2((TRUE_PI - static_cast<long double>(pi))/TRUE_PI);
 
     std::cout << "Computed PI: " << std::setprecision(25) << pi << std::endl
             << "True PI: " << std::setprecision(25) << TRUE_PI << std::endl
-            << "Estimate error: " <<  std::abs(error) << std::endl
+            << "Estimate error: " <<  std::abs(error2) << std::endl
             << "Elapsed time (s) = " << time3 << std::endl;
 
     return 0;
