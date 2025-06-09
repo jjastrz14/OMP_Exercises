@@ -15,6 +15,7 @@
 #include <cmath>
 #include <iomanip>
 #include <omp.h>
+#include <numbers>
 
 inline constexpr std::size_t INTERVALS{100000000};
 
@@ -29,6 +30,8 @@ int main()
 
     std::cout << "Number of intervals: " << INTERVALS << std::endl;
 
+    #pragma omp parallel for reduction(+:sum) schedule(static)
+    // Using OpenMP to parallelize the loop for better performance
     for (std::size_t i = 1; i <= INTERVALS; i++)
     {
         x = dx * (static_cast<double>(i) - 0.5);
@@ -43,9 +46,9 @@ int main()
     long double error((std::numbers::pi_v<long double> - static_cast<long double>(pi))/std::numbers::pi_v<long double>);
 
     std::cout << "Computed PI: " << std::setprecision(25) << pi << std::endl
-              << "True PI: " << std::setprecision(25) << std::numbers::pi_v<long double> << std::endl
-              << "Estimate error: " <<  std::abs(error) << std::endl
-              << "Elapsed time (s) = " << time2 << std::endl;
+            << "True PI: " << std::setprecision(25) << std::numbers::pi_v<long double> << std::endl
+            << "Estimate error: " <<  std::abs(error) << std::endl
+            << "Elapsed time (s) = " << time2 << std::endl;
 
     return 0;
 }
